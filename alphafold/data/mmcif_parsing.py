@@ -315,7 +315,6 @@ def _get_header(parsed_info: MmCIFDict) -> PdbHeader:
       try:
         raw_resolution = parsed_info[res_key][0]
         header['resolution'] = float(raw_resolution)
-        break
       except ValueError:
         logging.debug('Invalid resolution format: %s', parsed_info[res_key])
 
@@ -375,7 +374,7 @@ def _get_protein_chains(
     chain_ids = entity_to_mmcif_chains[entity_id]
 
     # Reject polymers without any peptide-like components, such as DNA/RNA.
-    if any(['peptide' in chem_comps[monomer.id]['_chem_comp.type'].lower()
+    if any(['peptide' in chem_comps[monomer.id]['_chem_comp.type']
             for monomer in seq_info]):
       for chain_id in chain_ids:
         valid_chains[chain_id] = seq_info
